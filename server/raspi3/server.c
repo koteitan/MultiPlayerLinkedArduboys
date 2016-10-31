@@ -67,11 +67,26 @@ void main(void){
   tcgetattr(fd1,&oldtio); /* save current port settings */
   /* 新しいポートの設定をカノニカル入力処理に設定する */
   newtio.c_cflag = BAUDRATE | CRTSCTS | CS8 | CLOCAL | CREAD;
-  newtio.c_iflag = IGNPAR | ICRNL;
+  newtio.c_iflag = IGNPAR;
   newtio.c_oflag = 0;
   newtio.c_lflag = 0;
-  newtio.c_cc[VMIN]=1;
-  newtio.c_cc[VTIME]=0;
+  newtio.c_cc[VINTR]    = 0;     /* Ctrl-c */ 
+  newtio.c_cc[VQUIT]    = 0;     /* Ctrl-\ */
+  newtio.c_cc[VERASE]   = 0;     /* del */
+  newtio.c_cc[VKILL]    = 0;     /* @ */
+  newtio.c_cc[VEOF]     = 4;     /* Ctrl-d */
+  newtio.c_cc[VTIME]    = 0;
+  newtio.c_cc[VMIN]     = 1;
+  newtio.c_cc[VSWTC]    = 0;     /* '\0' */
+  newtio.c_cc[VSTART]   = 0;     /* Ctrl-q */ 
+  newtio.c_cc[VSTOP]    = 0;     /* Ctrl-s */
+  newtio.c_cc[VSUSP]    = 0;     /* Ctrl-z */
+  newtio.c_cc[VEOL]     = 0;     /* '\0' */
+  newtio.c_cc[VREPRINT] = 0;     /* Ctrl-r */
+  newtio.c_cc[VDISCARD] = 0;     /* Ctrl-u */
+  newtio.c_cc[VWERASE]  = 0;     /* Ctrl-w */
+  newtio.c_cc[VLNEXT]   = 0;     /* Ctrl-v */
+  newtio.c_cc[VEOL2]    = 0;     /* '\0' */
   tcflush(fd0, TCIFLUSH);
   tcflush(fd1, TCIFLUSH);
   tcsetattr(fd0,TCSANOW,&newtio);
