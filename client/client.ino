@@ -10,7 +10,8 @@ void setup() {
   Serial.setTimeout(100);
   Serial.begin(9600);
 }
-
+char sss[4]="ABC";
+int ssi=0;
 void loop() {
   //PIN -> latch own key -> cMPKey
   for(int k=2;k<8;k++){
@@ -19,10 +20,9 @@ void loop() {
   // in active frame
   if (!(arduboy.nextFrame())) return;
   //Serial -> receive opp key -> cMPKey
-#if 0
-  Serial.print((uint8_t)(keymapMP[PLAYER_OWN])>>2);
-  Serial.print(" ");
-#endif
+  keymapMP[PLAYER_OWN]=sss[ssi];
+  ssi++;
+  ssi%=3;
   Serial.write(&keymapMP[PLAYER_OWN],1);
   Serial.readBytes(&keymapMP[PLAYER_OPP],1);
 
