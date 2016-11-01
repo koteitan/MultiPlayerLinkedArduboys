@@ -10,10 +10,6 @@ void setup() {
   Serial.setTimeout(100);
   Serial.begin(9600);
 }
-#if 1
-  char sss[4]="ABC";
-  int ssi=0;
-#endif
 void loop() {
   //PIN -> latch own key -> cMPKey
   for(int k=2;k<8;k++){
@@ -21,13 +17,7 @@ void loop() {
   }
   // in active frame
   if (!(arduboy.nextFrame())) return;
-  keymapMP[PLAYER_OWN]=0;
   
-#if 1
-  keymapMP[PLAYER_OWN]=sss[ssi];
-  ssi++;
-  ssi%=3;
-#endif
   //Serial -> receive opp key -> cMPKey
   Serial.write(&keymapMP[PLAYER_OWN],1);
   Serial.readBytes(&keymapMP[PLAYER_OPP],1);
@@ -40,18 +30,6 @@ void procAll(){
   drawAll();
 }
 void drawAll(){
-  arduboy.clear();
-  arduboy.setCursor( 0, 0);
-  
-  arduboy.print("recv:");
-  arduboy.print((int)keymapMP[PLAYER_OPP]);
-  arduboy.println();
-  
-  arduboy.print("send:");
-  arduboy.print((int)keymapMP[PLAYER_OWN]);
-  arduboy.println();
-  arduboy.display();
-  #if 0
   arduboy.clear();
   arduboy.setCursor( 0, 0);
   arduboy.println("my key:");
@@ -84,5 +62,4 @@ void drawAll(){
   arduboy.println((keymapMP[PLAYER_OPP]&DOWN_BUTTON)?"":"D");
 
   arduboy.display();
-  #endif
 }
