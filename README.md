@@ -6,8 +6,8 @@ for example:
     cd /server/raspi3/
     ls /dev/serial/by-path/
     # check your serial port here...
-    ln -s /dev/serial/by-path/pci-0000:00:1d.7-usb-0:1.4:1.0-port0
-    ln -s /dev/serial/by-path/pci-0000:00:1d.7-usb-0:1.2:1.0-port0
+    ln -s /dev/serial/by-path/pci-0000:00:1d.7-usb-0:1.4:1.0-port0 serial0
+    ln -s /dev/serial/by-path/pci-0000:00:1d.7-usb-0:1.2:1.0-port0 serial1
     gcc -o server server.c
     ./server
 
